@@ -7,7 +7,7 @@ mod tests {
 
     #[test]
     fn load_mf4() {
-        let path = PathBuf::from("test.mf4");
+        let path = PathBuf::from("assets/test.mf4");
         let mdf4_result = get_mdf4(&path);
         assert!(mdf4_result.is_ok());
         let mut mdf4 = mdf4_result.unwrap();
