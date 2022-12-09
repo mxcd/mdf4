@@ -6,7 +6,12 @@ license = "MIT"
 repository = "https://github.com/mxcd/mdf4"
 description = "Library for reading MDF4 files"
 
+exclude = [
+    "assets/test.mf4"
+]
+
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
 filesize = "0.2.0"
+
