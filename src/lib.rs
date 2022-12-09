@@ -15,6 +15,11 @@ mod tests {
         println!("size: {}", &mdf4.size);
         // load the file identification
         mdf4.load_file_id();
+        // print the version of the file
+        let optional_header = &mdf4.header;
+        assert!(optional_header.is_some());
+        let header = &mdf4.header.unwrap();
+        println!("version: {}", &header.version);
     }
 }
 
