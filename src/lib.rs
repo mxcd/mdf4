@@ -1,5 +1,13 @@
-use std::{path::{PathBuf}, io::{self, Read}, fs::File};
+extern crate block_macro;
+use block_macro::block_definition;
 use filesize::PathExt;
+use std::{
+    fs::File,
+    io::{self, Read},
+    path::PathBuf,
+};
+
+block_definition!("blockspecs/id.blockspec.yml");
 
 #[cfg(test)]
 mod tests {
@@ -21,16 +29,35 @@ mod tests {
         let header = &mdf4.header.unwrap();
         println!("version: {}", &header.version);
     }
+
+    #[test]
+    fn create_dummy_id_block() {
+        let id_block: IDBlock = IDBlock {
+            fileIdentifier: "".to_string(),
+            formatIdentifier: "".to_string(),
+            programIdentifier: "".to_string(),
+            defaultByteOrder: 0,
+            defaultFloatingPointFormat: 0,
+            versionNumber: 420,
+            codePageNumber: 0,
+            reservedBlockA: ' ',
+            reservedBlockB: ' ',
+            standardUnfinalizedFlags: 0,
+            customUnfinalizedFlags: 0,
+        };
+
+        println!("{:?}", id_block);
+    }
 }
 
 pub struct MDF4Identification {
-    version: String
+    version: String,
 }
 
 pub struct MDF4 {
     pub file_path: PathBuf,
     pub size: u64,
-    pub header: Option<MDF4Identification>
+    pub header: Option<MDF4Identification>,
 }
 
 pub fn get_mdf4(file_path: &PathBuf) -> Result<MDF4, io::Error> {
@@ -40,7 +67,7 @@ pub fn get_mdf4(file_path: &PathBuf) -> Result<MDF4, io::Error> {
     let mdf4 = MDF4 {
         file_path: file_path.clone(),
         size,
-        header: None
+        header: None,
     };
     return Ok(mdf4);
 }
@@ -54,7 +81,11 @@ impl MDF4 {
         let chunk_size = 0x10;
         let mut chunk = Vec::with_capacity(chunk_size);
         let mut file = File::open(&self.file_path).unwrap();
-        let n = file.by_ref().take(chunk_size as u64).read_to_end(&mut chunk).unwrap();
+        let n = file
+            .by_ref()
+            .take(chunk_size as u64)
+            .read_to_end(&mut chunk)
+            .unwrap();
         if n != chunk_size {
             panic!("could not read the first 16 bytes of the file");
         }
@@ -70,7 +101,7 @@ impl MDF4 {
         println!("version: {}", version_string);
 
         self.header = Some(MDF4Identification {
-            version: version_string.to_string()
+            version: version_string.to_string(),
         });
     }
 }

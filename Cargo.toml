@@ -14,4 +14,4 @@ exclude = [
 
 [dependencies]
 filesize = "0.2.0"
-
+block_macro = { path = "./block_macro" }

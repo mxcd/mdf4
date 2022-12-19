@@ -1,0 +1,53 @@
+blocks:
+  - name: IDBlock
+    identifier: ""
+    fields:
+      - name: fileIdentifier
+        field_type: String
+        length: 8
+        comment: "File identifier. Should state 'MDF'"
+      - name: formatIdentifier
+        field_type: String
+        length: 8
+      - name: programIdentifier
+        field_type: String
+        length: 8
+      - name: defaultByteOrder
+        comment: |
+          The default byte order used in the file.
+          0 = Little Endian (Intel byte order)
+          1 = Big Endian (Motorola byte order)
+        field_type: u16
+        length: 2
+      - name: defaultFloatingPointFormat
+        comment: |
+          The default floating point format used in the file.
+          0 = IEEE 754
+          1 = G_Float (VAX)
+          2 = D_Float (VAX)
+        field_type: u16
+        length: 2
+      - name: versionNumber
+        comment: The version number of the file format (e.g. 420 (hehehe) for version 4.2.0)
+        field_type: u16
+        length: 2
+      - name: codePageNumber
+        comment: The code page number used in the file
+        field_type: u16
+        length: 2
+      - name: reservedBlockA
+        comment: Reserved for future use
+        field_type: char
+        length: 2
+      - name: reservedBlockB
+        comment: Reserved for future use
+        field_type: char
+        length: 26
+      - name: standardUnfinalizedFlags
+        comment: Standard flags to indicate steps required to finalize a file
+        field_type: u16
+        length: 2
+      - name: customUnfinalizedFlags
+        comment: Custom flags to indicate steps required to finalize a file
+        field_type: u16
+        length: 2
