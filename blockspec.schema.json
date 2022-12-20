@@ -13,6 +13,17 @@
           "identifier": {
             "type": "string"
           },
+          "dynamic_block_size": {
+            "type": "boolean"
+          },
+          "length": {
+            "type": "number",
+            "description": "Length of the block in bytes. To be ignored if dynamicBlockSize is true."
+          },
+          "size_identifier": {
+            "type": "string",
+            "description": "Name of the field that contains the size of the block. To be ignored if dynamicBlockSize is false."
+          },
           "fields": {
             "type": "array",
             "items": {
@@ -31,12 +42,12 @@
                   "type": "string"
                 }
               },
-              "required": ["name", "field_type", "length"],
+              "required": ["name", "length", "field_type", "comment"],
               "additionalProperties": false
             }
           }
         },
-        "required": ["name", "fields"],
+        "required": ["name", "dynamic_block_size", "fields"],
         "additionalProperties": false
       }
     }

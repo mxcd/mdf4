@@ -1,5 +1,7 @@
 blocks:
   - name: IDBlock
+    dynamic_block_size: false
+    length: 64
     identifier: ""
     fields:
       - name: fileIdentifier
@@ -9,9 +11,11 @@ blocks:
       - name: formatIdentifier
         field_type: String
         length: 8
+        comment: "Textual representation of the file format version"
       - name: programIdentifier
         field_type: String
         length: 8
+        comment: "Textual representation of the program that created the file"
       - name: defaultByteOrder
         comment: |
           The default byte order used in the file.
@@ -37,11 +41,11 @@ blocks:
         length: 2
       - name: reservedBlockA
         comment: Reserved for future use
-        field_type: char
+        field_type: Bytes
         length: 2
       - name: reservedBlockB
         comment: Reserved for future use
-        field_type: char
+        field_type: Bytes
         length: 26
       - name: standardUnfinalizedFlags
         comment: Standard flags to indicate steps required to finalize a file

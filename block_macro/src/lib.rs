@@ -24,6 +24,7 @@ struct BlockSpecificationFile {
 #[derive(Deserialize, Debug)]
 struct BlockSpecification {
     name: String,
+    length: u64,
     identifier: String,
     fields: Vec<BlockFieldSpecification>,
 }
@@ -44,28 +45,11 @@ fn read_block_specification_file(file_name: &str) -> BlockSpecificationFile {
     return block_specifications;
 }
 
-/* macro_rules! block_field_definition {
-  ($name:ident, $block_field_spec:expr) => {
-    #[derive(Debug)]
-    pub struct $name {
-        $(
-            pub $block_field_spec.name: $block_field_spec.field_type,
-        )*
-    }
-  }
-} */
-
 #[proc_macro]
 pub fn block_definition(input: TokenStream) -> TokenStream {
     let file_name = parse_macro_input!(input as syn::LitStr);
-    println!("file name: {}", file_name.value());
     let resolved_file_name = __resolve_file(&file_name.value());
-    println!("resolved_file_name: {}", resolved_file_name.display());
     let block_specifications = read_block_specification_file(&resolved_file_name.to_str().unwrap());
-    println!(
-        "fields loaded: {}",
-        block_specifications.blocks[0].fields.len()
-    );
 
     // generate struct from block specification
     let block = &block_specifications.blocks[0];
@@ -85,7 +69,6 @@ pub fn block_definition(input: TokenStream) -> TokenStream {
           #(#block_fields),*
       }
     };
-    println!("{}", block_definition);
     block_definition.into()
 }
 
